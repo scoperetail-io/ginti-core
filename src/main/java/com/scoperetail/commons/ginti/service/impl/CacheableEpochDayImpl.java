@@ -27,33 +27,34 @@ package com.scoperetail.commons.ginti.service.impl;
  */
 
 import com.scoperetail.commons.ginti.service.EpochDay;
+import org.cache2k.Cache;
+import org.cache2k.Cache2kBuilder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+/**
+ * A read through cache implementation to get calculaae the current epoch day. It expires after 60
+ * minutes and loads on a cache miss.
+ */
 @Service
-public class EpochDayImpl implements EpochDay {
-  public static final long EPOCH_CONVERTER = (1000 * 60 * 60 * 24);
-  //  TODO use Cache2k instead
-  private Map<LocalDate, Integer> cache = new HashMap<>(1, 1);
+public class CacheableEpochDayImpl implements EpochDay {
+
+  private Cache<String, Integer> epochDayCache =
+      new Cache2kBuilder<String, Integer>() {}.name("epochDayCache-"+hashCode())
+          .eternal(false)
+          .entryCapacity(1)
+          .expireAfterWrite(60 * 60 * 1000, TimeUnit.MILLISECONDS)
+          .loader(key -> from(LocalDate.now()))
+          .build();
 
   private int from(LocalDate currentDate) {
-    int daysSinceEpoch = 0;
-    if (cache.containsKey(currentDate)) {
-      daysSinceEpoch = cache.get(currentDate);
-    } else {
-      cache.clear();
-      daysSinceEpoch = (int) (System.currentTimeMillis() / EPOCH_CONVERTER);
-      cache.put(currentDate, daysSinceEpoch);
-    }
-    return daysSinceEpoch;
+    return (int) (System.currentTimeMillis() / EPOCH_CONVERTER);
   }
 
   @Override
   public int current() {
-    // TODO - Use Cache2K cache loader to avoid the call of now() everytime
-    return from(LocalDate.now());
+    return epochDayCache.get("CURRENT_EPOCH_DAY");
   }
 }

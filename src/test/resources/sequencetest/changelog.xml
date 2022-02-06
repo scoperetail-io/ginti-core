@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
     <changeSet id="ginti" author="tushar">
-        <createSequence sequenceName="ORDER_NBR"
+        <createSequence sequenceName="ORDER_NBR1"
                         startValue="10"
                         incrementBy="1"
                         minValue="1"

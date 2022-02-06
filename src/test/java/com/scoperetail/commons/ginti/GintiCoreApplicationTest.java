@@ -28,14 +28,11 @@ package com.scoperetail.commons.ginti;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.springframework.test.annotation.DirtiesContext;
 
-//@SpringBootTest
-//@Testcontainers
+@SpringBootTest
 class GintiCoreApplicationTest {
-//  @Container public static MSSQLTestContainer mssqlserver = MSSQLTestContainer.getInstance();
 
-//  @Test
+  @Test
   void contextLoads() {}
 }

@@ -38,7 +38,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static com.scoperetail.commons.ginti.service.impl.EpochDayImpl.EPOCH_CONVERTER;
+import static com.scoperetail.commons.ginti.service.EpochDay.EPOCH_CONVERTER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ActiveProfiles("sequencegenerator")
