@@ -27,23 +27,24 @@ package com.scoperetail.commons.ginti.service.impl;
  */
 
 import com.scoperetail.commons.ginti.config.GintiConfig;
-import com.scoperetail.commons.ginti.format.Formatter;
+import com.scoperetail.commons.ginti.format.SequenceFormatter;
 import com.scoperetail.commons.ginti.persistence.SequenceDao;
 import com.scoperetail.commons.ginti.service.EpochDay;
-import com.scoperetail.commons.ginti.service.SequenceGenerator;
+import com.scoperetail.commons.ginti.service.GintiGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @Service
-public class LongTypeSequenceGeneratorImpl implements SequenceGenerator<Long> {
+public class LongTypeSequenceGeneratorImpl implements GintiGenerator<Long> {
   @Value(value = "${scoperetail.ginti.sql}")
   private String sql;
 
@@ -53,39 +54,17 @@ public class LongTypeSequenceGeneratorImpl implements SequenceGenerator<Long> {
   private final SequenceDao dao;
   private final GintiConfig config;
   private final EpochDay epochDay;
-  private final Formatter<Long> formatter;
+  private final SequenceFormatter<Long> formatter;
 
   public LongTypeSequenceGeneratorImpl(
       final SequenceDao dao,
       final GintiConfig config,
       final EpochDay epochDay,
-      final Formatter<Long> formatter) {
+      final SequenceFormatter<Long> formatter) {
     this.dao = dao;
     this.config = config;
     this.epochDay = epochDay;
     this.formatter = formatter;
-  }
-
-  @Override
-  public Long next(final String tenantId) {
-    final long sequence = dao.next(sqlCache.get(tenantId));
-    final int daysSinceEpoch = epochDay.current();
-    return formatter.format(config.getTenant(tenantId), sequence, daysSinceEpoch);
-  }
-
-  @Override
-  public Long next(final String tenantId, final String sequenceId) {
-    return null;
-  }
-
-  @Override
-  public List<Long> next(final String tenantId, final int count) {
-    return null;
-  }
-
-  @Override
-  public List<Long> next(final String tenantId, final String sequenceId, final int count) {
-    return null;
   }
   /** Initialize the cache for sequence */
   @PostConstruct
@@ -98,5 +77,42 @@ public class LongTypeSequenceGeneratorImpl implements SequenceGenerator<Long> {
                     tenant.getId(),
                     StringUtils.replace(sql, ":sequenceName", tenant.getSequence())));
     log.info("sqlCache:{}", sqlCache);
+  }
+
+  @Override
+  public Long next(final String tenantId) {
+    final String newSql = sqlCache.get(tenantId);
+    return formattedSequence(tenantId, newSql);
+  }
+
+  @Override
+  public Long next(final String tenantId, final String sequenceId) {
+    final String newSql = StringUtils.replace(sql, ":sequenceName", sequenceId);
+    return formattedSequence(tenantId, newSql);
+  }
+
+  @Override
+  public List<Long> next(final String tenantId, final int count) {
+    List<Long> sequences = new ArrayList<>(count);
+    for (int i = 0; i < count; i++) {
+      sequences.add(next(tenantId));
+    }
+    return sequences;
+  }
+
+  @Override
+  public List<Long> next(final String tenantId, final String sequenceId, final int count) {
+    final String newSql = StringUtils.replace(sql, ":sequenceName", sequenceId);
+    List<Long> sequences = new ArrayList<>(count);
+    for (int i = 0; i < count; i++) {
+      sequences.add(formattedSequence(tenantId, newSql));
+    }
+    return sequences;
+  }
+
+  private Long formattedSequence(final String tenantId, final String newSql) {
+    final long sequence = dao.next(newSql);
+    final int daysSinceEpoch = epochDay.current();
+    return formatter.format(config.getTenant(tenantId), sequence, daysSinceEpoch);
   }
 }

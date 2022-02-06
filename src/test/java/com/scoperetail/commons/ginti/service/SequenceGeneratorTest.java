@@ -48,7 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @DirtiesContext
 class SequenceGeneratorTest {
-  @Autowired private SequenceGenerator<Long> generator;
+  @Autowired private GintiGenerator<Long> generator;
   private static final int EPOCH_DAY = (int) (System.currentTimeMillis() / EPOCH_CONVERTER);
 
   @Test

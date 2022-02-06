@@ -31,7 +31,6 @@ import org.cache2k.Cache;
 import org.cache2k.Cache2kBuilder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -42,14 +41,14 @@ import java.util.concurrent.TimeUnit;
 public class CacheableEpochDayImpl implements EpochDay {
 
   private Cache<String, Integer> epochDayCache =
-      new Cache2kBuilder<String, Integer>() {}.name("epochDayCache-"+hashCode())
+      new Cache2kBuilder<String, Integer>() {}.name("epochDayCache-" + hashCode())
           .eternal(false)
           .entryCapacity(1)
-          .expireAfterWrite(60 * 60 * 1000, TimeUnit.MILLISECONDS)
-          .loader(key -> from(LocalDate.now()))
+          .expireAfterWrite(60l * 60 * 1000, TimeUnit.MILLISECONDS)
+          .loader(key -> from())
           .build();
 
-  private int from(LocalDate currentDate) {
+  private int from() {
     return (int) (System.currentTimeMillis() / EPOCH_CONVERTER);
   }
 

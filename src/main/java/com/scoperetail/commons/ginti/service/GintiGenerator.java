@@ -33,7 +33,7 @@ import java.util.List;
  *
  * @author tushar agrawal
  */
-public interface SequenceGenerator<ReturnType> {
+public interface GintiGenerator<ReturnType> {
   /**
    * Generate one sequence number for the given tenantId
    *

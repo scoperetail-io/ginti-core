@@ -27,7 +27,7 @@ package com.scoperetail.commons.ginti.format.impl;
  */
 
 import com.scoperetail.commons.ginti.config.Tenant;
-import com.scoperetail.commons.ginti.format.Formatter;
+import com.scoperetail.commons.ginti.format.SequenceFormatter;
 import org.springframework.stereotype.Service;
 
 import static org.apache.commons.lang3.StringUtils.leftPad;
@@ -43,7 +43,7 @@ import static org.apache.commons.lang3.StringUtils.leftPad;
  *     <p>You can override this class or implment the interface to change the default format
  */
 @Service
-public class LongTypeFormatterImpl implements Formatter<Long> {
+public class LongTypeFormatterImpl implements SequenceFormatter<Long> {
 
   /**
    * We are not adding any validations to avoid the performance impact. It is the responsibility of
