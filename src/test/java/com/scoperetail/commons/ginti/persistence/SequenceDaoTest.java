@@ -48,11 +48,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DirtiesContext
 class SequenceDaoTest {
   @Autowired private SequenceDao dao;
+
   @Value(value = "${scoperetail.ginti.sql}")
   private String sql;
+
   @Test
   void next() {
     long sequence = dao.next(sql);
-    assertEquals(sequence, 10);
+    assertEquals(10, sequence);
   }
 }

@@ -45,6 +45,8 @@ import java.util.Map;
 @Slf4j
 @Service
 public class LongTypeSequenceGeneratorImpl implements GintiGenerator<Long> {
+  public static final String SEQUENCE_NAME = ":sequenceName";
+
   @Value(value = "${scoperetail.ginti.sql}")
   private String sql;
 
@@ -74,8 +76,7 @@ public class LongTypeSequenceGeneratorImpl implements GintiGenerator<Long> {
         .forEach(
             tenant ->
                 sqlCache.put(
-                    tenant.getId(),
-                    StringUtils.replace(sql, ":sequenceName", tenant.getSequence())));
+                    tenant.getId(), StringUtils.replace(sql, SEQUENCE_NAME, tenant.getSequence())));
     log.info("sqlCache:{}", sqlCache);
   }
 
@@ -87,7 +88,7 @@ public class LongTypeSequenceGeneratorImpl implements GintiGenerator<Long> {
 
   @Override
   public Long next(final String tenantId, final String sequenceId) {
-    final String newSql = StringUtils.replace(sql, ":sequenceName", sequenceId);
+    final String newSql = StringUtils.replace(sql, SEQUENCE_NAME, sequenceId);
     return formattedSequence(tenantId, newSql);
   }
 
@@ -102,7 +103,7 @@ public class LongTypeSequenceGeneratorImpl implements GintiGenerator<Long> {
 
   @Override
   public List<Long> next(final String tenantId, final String sequenceId, final int count) {
-    final String newSql = StringUtils.replace(sql, ":sequenceName", sequenceId);
+    final String newSql = StringUtils.replace(sql, SEQUENCE_NAME, sequenceId);
     List<Long> sequences = new ArrayList<>(count);
     for (int i = 0; i < count; i++) {
       sequences.add(formattedSequence(tenantId, newSql));
