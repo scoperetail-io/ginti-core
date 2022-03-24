@@ -26,7 +26,6 @@ package com.scoperetail.commons.ginti.service;
  * =====
  */
 
-import com.scoperetail.commons.ginti.GintiCoreApplication;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,7 +41,7 @@ import static com.scoperetail.commons.ginti.service.EpochDay.EPOCH_CONVERTER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ActiveProfiles("sequencegenerator")
-@ComponentScan(basePackageClasses = GintiCoreApplication.class)
+//@ComponentScan(basePackageClasses = GintiCoreApplication.class)
 @EnableAutoConfiguration
 @ExtendWith(SpringExtension.class)
 @SpringBootTest

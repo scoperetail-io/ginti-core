@@ -26,7 +26,6 @@ package com.scoperetail.commons.ginti.service.impl;
  * =====
  */
 
-import com.scoperetail.commons.ginti.config.GintiConfig;
 import com.scoperetail.commons.ginti.format.SequenceFormatter;
 import com.scoperetail.commons.ginti.persistence.SequenceDao;
 import com.scoperetail.commons.ginti.service.EpochDay;
@@ -35,7 +34,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,29 +45,25 @@ import java.util.Map;
 public class LongTypeSequenceGeneratorImpl implements GintiGenerator<Long> {
   public static final String SEQUENCE_NAME = ":sequenceName";
 
-  @Value(value = "${scoperetail.ginti.sql}")
-  private String sql;
 
   /** Caches the SQL needed to generate the next sequence for a specific tenant */
   private final Map<String, String> sqlCache = new HashMap<>(1, 1);
 
   private final SequenceDao dao;
-  private final GintiConfig config;
   private final EpochDay epochDay;
   private final SequenceFormatter<Long> formatter;
 
   public LongTypeSequenceGeneratorImpl(
       final SequenceDao dao,
-      final GintiConfig config,
       final EpochDay epochDay,
       final SequenceFormatter<Long> formatter) {
     this.dao = dao;
-    this.config = config;
     this.epochDay = epochDay;
     this.formatter = formatter;
   }
+  
   /** Initialize the cache for sequence */
-  @PostConstruct
+/*  @PostConstruct
   private void init() {
     config
         .getTenant()
@@ -110,10 +104,35 @@ public class LongTypeSequenceGeneratorImpl implements GintiGenerator<Long> {
     }
     return sequences;
   }
-
+*/
   private Long formattedSequence(final String tenantId, final String newSql) {
     final long sequence = dao.next(newSql);
     final int daysSinceEpoch = epochDay.current();
-    return formatter.format(config.getTenant(tenantId), sequence, daysSinceEpoch);
+    //return formatter.format(config.getTenant(tenantId), sequence, daysSinceEpoch);
+    return null;
   }
+
+@Override
+public Long next(String tenantId) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public Long next(String tenantId, String sequenceId) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public List<Long> next(String tenantId, int count) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public List<Long> next(String tenantId, String sequenceId, int count) {
+	// TODO Auto-generated method stub
+	return null;
+}
 }

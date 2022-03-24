@@ -1,4 +1,4 @@
-package com.scoperetail.commons.ginti.config;
+package com.scoperetail.commons.ginti.entity;
 
 /*-
  * *****
@@ -12,10 +12,10 @@ package com.scoperetail.commons.ginti.config;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,37 +26,40 @@ package com.scoperetail.commons.ginti.config;
  * =====
  */
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-@Component
-@ConfigurationProperties(prefix = "scoperetail.ginti")
-@Getter
-@Setter
-public class GintiConfig {
-  private List<Tenant> tenant;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-  @Getter(AccessLevel.NONE)
-  @Setter(AccessLevel.NONE)
-  private Map<String, Tenant> map;
+@Table(name = "tenant")
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Tenant {
 
-  @PostConstruct
-  private void init() {
-    map =
-        tenant.stream()
-            .collect(Collectors.toMap(Tenant::getId, s -> s, (e1, e2) -> e1, HashMap::new));
-  }
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "tenant_id", unique = true, nullable = false)
+	private Integer tenantId;
 
-  public Tenant getTenant(String id) {
-    return map.get(id);
-  }
+	@Column(name = "tenant_name")
+	private String tenantName;
+	
+	@Column(name = "default_sequence")
+	private String defaultSequence;
+
+	@OneToMany(mappedBy = "tenant")
+	List<Service> serviceList;
+
 }

@@ -1,4 +1,4 @@
-package com.scoperetail.commons.ginti.persistence.impl;
+package com.scoperetail.commons.ginti.entity;
 
 /*-
  * *****
@@ -12,10 +12,10 @@ package com.scoperetail.commons.ginti.persistence.impl;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,24 +26,50 @@ package com.scoperetail.commons.ginti.persistence.impl;
  * =====
  */
 
-import com.scoperetail.commons.ginti.persistence.SequenceDao;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Repository
-@Slf4j
-public class SequenceDaoImpl implements SequenceDao {
+@Entity
+@Table(name = "services")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 
-	private final JdbcTemplate jdbcTemplate;
+public class Service {
 
-	public SequenceDaoImpl(final JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "service_id", unique = true, nullable = false)
+	private Integer serviceId;
+	
+	@Column(name = "service_name")
+	private String serviceName;
 
-	@Override
-	public Long next(final String sql) {
-		log.trace("sql:{}", sql);
-		return jdbcTemplate.queryForObject(sql, Long.class);
-	}
+	@Column(name = "alias")
+	private String alias;
+	
+	@Column(name = "format")
+	private String format;
+	
+	@Column(name = "default_count")
+	private Integer defaultCount;
+	
+	@Column(name = "sequence_object")
+	private String sequenceObject;
+
+	// bi-directional many-to-one association to Tenant
+	@ManyToOne
+	@JoinColumn(name = "tenant_id")
+	private Tenant tenant;
 }

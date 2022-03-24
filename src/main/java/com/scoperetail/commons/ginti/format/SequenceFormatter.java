@@ -1,5 +1,7 @@
 package com.scoperetail.commons.ginti.format;
 
+import com.scoperetail.commons.ginti.entity.Tenant;
+
 /*-
  * *****
  * ginti-core
@@ -26,8 +28,7 @@ package com.scoperetail.commons.ginti.format;
  * =====
  */
 
-import com.scoperetail.commons.ginti.config.Tenant;
 
 public interface SequenceFormatter<ReturnType> {
-  ReturnType format(final Tenant tenant, final long sequence, final int daysSinceEpoch);
+	ReturnType format(final Tenant tenant, final long sequence, final int daysSinceEpoch);
 }

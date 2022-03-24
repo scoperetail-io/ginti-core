@@ -1,4 +1,4 @@
-package com.scoperetail.commons.ginti.config;
+package com.scoperetail.commons.ginti.test;
 
 /*-
  * *****
@@ -12,10 +12,10 @@ package com.scoperetail.commons.ginti.config;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,16 +26,35 @@ package com.scoperetail.commons.ginti.config;
  * =====
  */
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Objects;
 
-@Getter
-@Setter
-@EqualsAndHashCode(of = {"id"})
-public class Tenant {
-  private String id;
-  private String prefix;
-  private String format;
-  private String sequence;
+public class Occurrence{
+    private int start;
+    private int end;
+
+    public Occurrence(int start, int end) {
+        this.start = start;
+        this.end = end;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Occurrence that = (Occurrence) o;
+        return start == that.start && end == that.end;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(start, end);
+    }
+    
+    @Override
+    public String toString() {
+        return "[" +
+                + start +
+                ", " + end +
+                ']';
+    }
 }
