@@ -58,8 +58,10 @@ public class Tenant {
 	
 	@Column(name = "default_sequence")
 	private String defaultSequence;
+	
+	@Column(name = "default_format")
+	private String defaultFormat;
 
 	@OneToMany(mappedBy = "tenant")
 	List<Service> serviceList;
-
 }

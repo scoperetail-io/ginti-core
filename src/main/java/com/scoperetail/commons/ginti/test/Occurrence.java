@@ -27,34 +27,37 @@ package com.scoperetail.commons.ginti.test;
  */
 
 import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class Occurrence{
-    private int start;
-    private int end;
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+public class Occurrence {
+	private int start;
+	private int end;
 
-    public Occurrence(int start, int end) {
-        this.start = start;
-        this.end = end;
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Occurrence that = (Occurrence) o;
+		return start == that.start && end == that.end;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Occurrence that = (Occurrence) o;
-        return start == that.start && end == that.end;
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(start, end);
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(start, end);
-    }
-    
-    @Override
-    public String toString() {
-        return "[" +
-                + start +
-                ", " + end +
-                ']';
-    }
+	@Override
+	public String toString() {
+		return "[" + +start + ", " + end + ']';
+	}
+
 }

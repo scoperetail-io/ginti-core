@@ -1,6 +1,11 @@
 package com.scoperetail.commons.ginti.format;
 
+import java.util.Map;
+import java.util.Set;
+
+import com.scoperetail.commons.ginti.dto.SequenceRequest;
 import com.scoperetail.commons.ginti.entity.Tenant;
+import com.scoperetail.commons.ginti.test.Occurrence;
 
 /*-
  * *****
@@ -30,5 +35,7 @@ import com.scoperetail.commons.ginti.entity.Tenant;
 
 
 public interface SequenceFormatter<ReturnType> {
-	ReturnType format(final Tenant tenant, final long sequence, final int daysSinceEpoch);
+
+	ReturnType format(SequenceRequest sequenceRequest, Map<Character, Set<Occurrence>> tokenOccurenceMap,
+			Map<String, Object> sqlResponse, Integer daysSinceEpoch);
 }

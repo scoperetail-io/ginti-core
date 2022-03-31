@@ -1,4 +1,4 @@
-package com.scoperetail.commons.ginti.service;
+package com.scoperetail.commons.ginti.config;
 
 /*-
  * *****
@@ -26,24 +26,14 @@ package com.scoperetail.commons.ginti.service;
  * =====
  */
 
-import java.util.List;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.scoperetail.commons.ginti.dto.SequenceRequest;
-import com.scoperetail.commons.ginti.exception.ValidationFailedException;
-
-/**
- * Main interface to be used by all consumers interested in generating sequences
- *
- * @author tushar agrawal
- */
-public interface GintiGenerator<ReturnType> {
-	/**
-	 * Generate a list of sequence number for the given tenantId
-	 *
-	 * @param seqRequest - Details of sequence that needs to be generated
-	 * @param count      - Total number of sequences to be generated.
-	 * @return List of sequence number formatted as per the configuration
-	 * @throws Exception
-	 */
-	List<ReturnType> next(SequenceRequest seqRequest, int count) throws RuntimeException;
+@Configuration
+@EntityScan({"com.scoperetail.commons.ginti"})
+@EnableJpaRepositories(basePackages = {"com.scoperetail.commons.ginti"})
+public class PersistenceConfig {
+	
 }
+

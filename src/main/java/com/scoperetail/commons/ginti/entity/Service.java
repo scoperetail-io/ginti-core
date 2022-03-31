@@ -38,6 +38,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "services")
@@ -45,7 +46,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class Service {
 
 	@Id
@@ -62,13 +62,9 @@ public class Service {
 	@Column(name = "format")
 	private String format;
 	
-	@Column(name = "default_count")
-	private Integer defaultCount;
-	
 	@Column(name = "sequence_object")
 	private String sequenceObject;
 
-	// bi-directional many-to-one association to Tenant
 	@ManyToOne
 	@JoinColumn(name = "tenant_id")
 	private Tenant tenant;

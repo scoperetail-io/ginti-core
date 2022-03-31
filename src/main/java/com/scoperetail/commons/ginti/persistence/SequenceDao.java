@@ -1,5 +1,7 @@
 package com.scoperetail.commons.ginti.persistence;
 
+import java.util.Map;
+
 /*-
  * *****
  * ginti-core
@@ -33,5 +35,5 @@ public interface SequenceDao {
    * @param sequenceName - Name of the sequence object
    * @return a long
    */
-  Long next(final String sql);
+	Map<String,Object> next(final String sql);
 }
