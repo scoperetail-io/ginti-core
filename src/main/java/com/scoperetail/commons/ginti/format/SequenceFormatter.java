@@ -2,10 +2,8 @@ package com.scoperetail.commons.ginti.format;
 
 import java.util.Map;
 import java.util.Set;
-
-import com.scoperetail.commons.ginti.dto.SequenceRequest;
-import com.scoperetail.commons.ginti.entity.Tenant;
-import com.scoperetail.commons.ginti.test.Occurrence;
+import com.scoperetail.commons.ginti.model.Occurrence;
+import com.scoperetail.commons.ginti.model.SequenceRequest;
 
 /*-
  * *****

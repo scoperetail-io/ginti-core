@@ -28,12 +28,7 @@ package com.scoperetail.commons.ginti.persistence.impl;
 
 import com.scoperetail.commons.ginti.persistence.SequenceDao;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

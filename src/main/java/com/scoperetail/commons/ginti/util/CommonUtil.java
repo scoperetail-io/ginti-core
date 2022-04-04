@@ -4,14 +4,16 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import com.scoperetail.commons.ginti.exception.ValidationFailedException;
-import com.scoperetail.commons.ginti.test.Occurrence;
 
+import org.springframework.stereotype.Component;
+
+import com.scoperetail.commons.ginti.exception.ValidationFailedException;
+import com.scoperetail.commons.ginti.model.Occurrence;
+
+@Component
 public class CommonUtil {
 
-	private static Map<Character, Set<Occurrence>> tokenOccurenceMap = new HashMap<Character, Set<Occurrence>>();
-
-	public static void checkForValidToken(String seqFormat) throws ValidationFailedException {
+	public void checkForValidToken(String seqFormat) throws ValidationFailedException {
 		Set<Character> tokenSet = Tokens.tokenSet;
 		seqFormat.chars().mapToObj(i -> Character.valueOf((char) i)).forEach(e -> {
 			if (!tokenSet.contains(e))
@@ -19,8 +21,9 @@ public class CommonUtil {
 		});
 	}
 
-	public static Map<Character, Set<Occurrence>> checkForValidformat(String seqFormat) throws ValidationFailedException {
-		initiliazeTokenOccurence(seqFormat);
+	public Map<Character, Set<Occurrence>> checkForValidformat(String seqFormat) throws ValidationFailedException {
+		Map<Character, Set<Occurrence>> tokenOccurenceMap = new HashMap<Character, Set<Occurrence>>();
+		initiliazeTokenOccurence(seqFormat,tokenOccurenceMap);
 		tokenOccurenceMap.get('D').forEach(e -> {
 			if (!(e.getEnd() - e.getStart() + 1 >= 5))
 				throw new ValidationFailedException("The number of epoch Days 'D' should be minimum of 5 digits");
@@ -28,8 +31,8 @@ public class CommonUtil {
 		return tokenOccurenceMap;
 	}
 
-	private static void initiliazeTokenOccurence(String seqFormat) {
-
+	private void initiliazeTokenOccurence(String seqFormat, Map<Character, Set<Occurrence>> tokenOccurenceMap) {
+		
 		int start = 0, end = 0;
 		for (int i = 0; i < seqFormat.length(); i++) {
 			char currentToken = seqFormat.charAt(i);

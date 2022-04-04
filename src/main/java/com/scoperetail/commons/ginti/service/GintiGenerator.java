@@ -27,9 +27,7 @@ package com.scoperetail.commons.ginti.service;
  */
 
 import java.util.List;
-
-import com.scoperetail.commons.ginti.dto.SequenceRequest;
-import com.scoperetail.commons.ginti.exception.ValidationFailedException;
+import com.scoperetail.commons.ginti.model.SequenceRequest;
 
 /**
  * Main interface to be used by all consumers interested in generating sequences

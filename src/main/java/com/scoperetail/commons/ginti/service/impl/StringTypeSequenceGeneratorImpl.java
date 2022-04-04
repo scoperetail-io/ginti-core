@@ -27,46 +27,49 @@ package com.scoperetail.commons.ginti.service.impl;
  */
 
 import com.scoperetail.commons.ginti.format.SequenceFormatter;
+import com.scoperetail.commons.ginti.model.Occurrence;
+import com.scoperetail.commons.ginti.model.SequenceRequest;
 import com.scoperetail.commons.ginti.persistence.SequenceDao;
 import com.scoperetail.commons.ginti.service.EpochDay;
 import com.scoperetail.commons.ginti.service.GintiGenerator;
-import com.scoperetail.commons.ginti.test.Occurrence;
 import com.scoperetail.commons.ginti.util.CommonUtil;
+import com.scoperetail.commons.ginti.util.Constants;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import com.scoperetail.commons.ginti.dto.SequenceRequest;
+
 import com.scoperetail.commons.ginti.exception.ValidationFailedException;
 
 @Service
 public class StringTypeSequenceGeneratorImpl implements GintiGenerator<String> {
 
-	private static final String SEQUENCE_NAME = ":sequ_name";
-	private static final String SEQUENCE_COUNT = ":count";
 	private final SequenceDao dao;
 	private final EpochDay epochDay;
 	private final SequenceFormatter<List<String>> formatter;
-
+	private CommonUtil commonUtil;
+	
 	@Value(value = "${scoperetail.ginti.sql}")
-	private String sql;
+	private String sqlQuery;
 
 	public StringTypeSequenceGeneratorImpl(final SequenceDao dao, final EpochDay epochDay,
-			final SequenceFormatter<List<String>> formatter) {
+			final SequenceFormatter<List<String>> formatter, final CommonUtil commonUtil) {
 		this.dao = dao;
 		this.epochDay = epochDay;
 		this.formatter = formatter;
+		this.commonUtil=commonUtil;
 	}
 
 	@Override
 	public List<String> next(SequenceRequest seqRequest, int count) throws ValidationFailedException {
 
 		String seqFormat = seqRequest.getSequenceFormat();
-		CommonUtil.checkForValidToken(seqFormat);
-		Map<Character, Set<Occurrence>> tokenOccurenceMap= CommonUtil.checkForValidformat(seqFormat);
-		sql = sql.replace(SEQUENCE_NAME, seqRequest.getSequenceObject()).replace(SEQUENCE_COUNT, String.valueOf(count));
-		Map<String, Object> sqlResponse= dao.next(sql);
+		commonUtil.checkForValidToken(seqFormat);
+		Map<Character, Set<Occurrence>> tokenOccurenceMap= commonUtil.checkForValidformat(seqFormat);
+		String seqQuery= sqlQuery.replace(Constants.SEQUENCE_NAME, seqRequest.getSequenceObject()).replace(Constants.SEQUENCE_COUNT, String.valueOf(count));
+		Map<String, Object> sqlResponse= dao.next(seqQuery);
 		final Integer daysSinceEpoch = epochDay.current();
 
 		return formatter.format(seqRequest,tokenOccurenceMap,sqlResponse,daysSinceEpoch);

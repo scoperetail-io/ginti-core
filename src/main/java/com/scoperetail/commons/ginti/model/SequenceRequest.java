@@ -1,4 +1,4 @@
-package com.scoperetail.commons.ginti.dto;
+package com.scoperetail.commons.ginti.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

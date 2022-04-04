@@ -1,4 +1,4 @@
-package com.scoperetail.commons.ginti.test;
+package com.scoperetail.commons.ginti.model;
 
 /*-
  * *****
