@@ -61,8 +61,8 @@ public class Service {
 	@Column(name = "format")
 	private String format;
 	
-	@Column(name = "sequence_object")
-	private String sequenceObject;
+	@Column(name = "sequence_name")
+	private String sequenceName;
 
 	@ManyToOne
 	@JoinColumn(name = "tenant_id")

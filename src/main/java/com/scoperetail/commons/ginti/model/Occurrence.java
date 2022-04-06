@@ -30,16 +30,17 @@ import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Data
 @Builder
 public class Occurrence {
-	private int start;
-	private int end;
-
+	private final int start;
+	private final int end;
+	private String strToReplace;
+	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -54,10 +55,4 @@ public class Occurrence {
 	public int hashCode() {
 		return Objects.hash(start, end);
 	}
-
-	@Override
-	public String toString() {
-		return "[" + +start + ", " + end + ']';
-	}
-
 }

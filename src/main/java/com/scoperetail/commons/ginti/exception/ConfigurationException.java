@@ -1,4 +1,4 @@
-package com.scoperetail.commons.ginti.model;
+package com.scoperetail.commons.ginti.exception;
 
 /*-
  * *****
@@ -26,20 +26,11 @@ package com.scoperetail.commons.ginti.model;
  * =====
  */
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+public class ConfigurationException extends RuntimeException {
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class SequenceRequest {
+	private static final long serialVersionUID = 1L;
 
-	private String sequenceObject;
-	private String sequenceFormat;
-	private String alias;
+	public ConfigurationException(final String exception) {
+		super(exception);
+	}
 }

@@ -27,7 +27,7 @@ package com.scoperetail.commons.ginti.service;
  */
 
 import java.util.List;
-import com.scoperetail.commons.ginti.model.SequenceRequest;
+import com.scoperetail.commons.ginti.model.Request;
 
 /**
  * Main interface to be used by all consumers interested in generating sequences
@@ -39,9 +39,8 @@ public interface GintiGenerator<ReturnType> {
 	 * Generate a list of sequence number for the given tenantId
 	 *
 	 * @param seqRequest - Details of sequence that needs to be generated
-	 * @param count      - Total number of sequences to be generated.
 	 * @return List of sequence number formatted as per the configuration
 	 * @throws Exception
 	 */
-	List<ReturnType> next(SequenceRequest seqRequest, int count) throws RuntimeException;
+	List<ReturnType> next(Request seqRequest) throws RuntimeException;
 }

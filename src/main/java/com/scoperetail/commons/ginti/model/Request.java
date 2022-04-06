@@ -1,4 +1,4 @@
-package com.scoperetail.commons.ginti.exception;
+package com.scoperetail.commons.ginti.model;
 
 /*-
  * *****
@@ -26,10 +26,21 @@ package com.scoperetail.commons.ginti.exception;
  * =====
  */
 
-public class ValidationFailedException extends RuntimeException {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-	private static final long serialVersionUID = 1L;
-	public ValidationFailedException(final String exception) {
-		super(exception);
-	}
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Request {
+
+	private String sequenceName;
+	private String sequenceFormat;
+	private String alias;
+	private Integer count;
 }

@@ -32,4 +32,5 @@ public interface Constants {
 	public static final String SEQUENCE_COUNT = ":count";
 	public static final String SEQUENCE_START="FirstVal";
 	public static final String SEQUENCE_END="LastVal";
+	public static final String VALID_CHARACTERS_IN_FORMAT="[DTN-]+";
 }

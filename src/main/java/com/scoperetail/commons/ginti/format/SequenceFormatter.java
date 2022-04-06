@@ -3,7 +3,7 @@ package com.scoperetail.commons.ginti.format;
 import java.util.Map;
 import java.util.Set;
 import com.scoperetail.commons.ginti.model.Occurrence;
-import com.scoperetail.commons.ginti.model.SequenceRequest;
+import com.scoperetail.commons.ginti.model.Request;
 
 /*-
  * *****
@@ -34,6 +34,5 @@ import com.scoperetail.commons.ginti.model.SequenceRequest;
 
 public interface SequenceFormatter<ReturnType> {
 
-	ReturnType format(SequenceRequest sequenceRequest, Map<Character, Set<Occurrence>> tokenOccurenceMap,
-			Map<String, Object> sqlResponse, Integer daysSinceEpoch);
+	ReturnType format(Request seqRequest, Map<Character, Set<Occurrence>> tokenOccurenceMap);
 }
