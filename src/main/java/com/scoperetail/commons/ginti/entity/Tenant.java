@@ -12,10 +12,10 @@ package com.scoperetail.commons.ginti.entity;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -43,17 +43,17 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Tenant {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "tenant_id", unique = true, nullable = false)
-	private Integer tenantId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "tenant_id", unique = true, nullable = false)
+  private Integer tenantId;
 
-	@Column(name = "tenant_name")
-	private String tenantName;
-	
-	@Column(name = "default_sequence")
-	private String defaultSequence;
-	
-	@Column(name = "default_format")
-	private String defaultFormat;
+  @Column(name = "tenant_name")
+  private String tenantName;
+
+  @Column(name = "default_sequence")
+  private String defaultSequence;
+
+  @Column(name = "default_format")
+  private String defaultFormat;
 }

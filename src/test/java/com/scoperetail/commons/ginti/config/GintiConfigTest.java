@@ -26,31 +26,27 @@ package com.scoperetail.commons.ginti.config;
  * =====
  */
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ActiveProfiles("tenantconfigtest")
-//@ComponentScan(basePackageClasses = GintiCoreApplication.class)
+// @ComponentScan(basePackageClasses = GintiCoreApplication.class)
 @EnableAutoConfiguration
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @DirtiesContext
 class GintiConfigTest {
-/*  @Autowired private GintiConfig tenantGintiConfig;
+  /*
+    @Autowired private GintiConfig tenantGintiConfig;
 
   @Test
   void tenants() {
-    final List<Tenant> tenants = tenantGintiConfig.getTenant();
+    final List<Tenan> tenants = tenantGintiConfig.getTenant();
     assertEquals("05", tenants.get(0).getId());
     assertEquals("05", tenants.get(0).getPrefix());
     assertEquals("DDTTNN", tenants.get(0).getFormat());

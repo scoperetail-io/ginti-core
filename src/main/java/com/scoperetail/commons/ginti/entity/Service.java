@@ -12,10 +12,10 @@ package com.scoperetail.commons.ginti.entity;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -47,24 +47,24 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Service {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "service_id", unique = true, nullable = false)
-	private Integer serviceId;
-	
-	@Column(name = "service_name")
-	private String serviceName;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "service_id", unique = true, nullable = false)
+  private Integer serviceId;
 
-	@Column(name = "alias")
-	private String alias;
-	
-	@Column(name = "format")
-	private String format;
-	
-	@Column(name = "sequence_name")
-	private String sequenceName;
+  @Column(name = "service_name")
+  private String serviceName;
 
-	@ManyToOne
-	@JoinColumn(name = "tenant_id")
-	private Tenant tenant;
+  @Column(name = "alias")
+  private String alias;
+
+  @Column(name = "format")
+  private String format;
+
+  @Column(name = "sequence_name")
+  private String sequenceName;
+
+  @ManyToOne
+  @JoinColumn(name = "tenant_id")
+  private Tenant tenant;
 }

@@ -1,7 +1,5 @@
 package com.scoperetail.commons.ginti.format.impl;
 
-import com.scoperetail.commons.ginti.exception.ConfigurationException;
-
 /*-
  * *****
  * ginti-core
@@ -14,10 +12,10 @@ import com.scoperetail.commons.ginti.exception.ConfigurationException;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,79 +31,87 @@ import com.scoperetail.commons.ginti.model.Occurrence;
 import com.scoperetail.commons.ginti.model.Request;
 import com.scoperetail.commons.ginti.persistence.SequenceDao;
 import com.scoperetail.commons.ginti.util.Constants;
-
+import com.scoperetail.commons.ginti.exception.ConfigurationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import static org.apache.commons.lang3.StringUtils.leftPad;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 public class StringTypeFormatterImpl implements SequenceFormatter<List<String>> {
 
-	@Autowired
-	private SequenceDao dao;
+  @Autowired private SequenceDao dao;
 
-	@Value(value = "${scoperetail.ginti.sql}")
-	private String sqlQuery;
+  @Value(value = "${scoperetail.ginti.sql}")
+  private String sqlQuery;
 
-	@Override
-	public List<String> format(Request seqRequest, Map<Character, Set<Occurrence>> tokenOccurenceMap) {
+  @Override
+  public List<String> format(
+      Request seqRequest, Map<Character, Set<Occurrence>> tokenOccurenceMap) {
 
-		StringBuilder intermediateFormat = new StringBuilder(seqRequest.getSequenceFormat());
-		tokenOccurenceMap.entrySet().forEach(e -> {
-			Set<Occurrence> eachCharOccure = e.getValue();
-			eachCharOccure.stream().forEach(eachOccu -> {
-				replaceFormat(eachOccu, intermediateFormat);
-			});
-		});
-		return replaceSequence(seqRequest, tokenOccurenceMap, intermediateFormat);
-	}
+    StringBuilder intermediateFormat = new StringBuilder(seqRequest.getSequenceFormat());
+    tokenOccurenceMap
+        .entrySet()
+        .forEach(
+            e -> {
+              Set<Occurrence> eachCharOccure = e.getValue();
+              eachCharOccure.stream()
+                  .forEach(
+                      eachOccu -> {
+                        replaceFormat(eachOccu, intermediateFormat);
+                      });
+            });
+    return replaceSequence(seqRequest, tokenOccurenceMap, intermediateFormat);
+  }
 
-	private List<String> replaceSequence(Request seqRequest, Map<Character, Set<Occurrence>> tokenOccurenceMap,
-			StringBuilder intermediateFormat) {
+  private List<String> replaceSequence(
+      Request seqRequest,
+      Map<Character, Set<Occurrence>> tokenOccurenceMap,
+      StringBuilder intermediateFormat) {
 
-		Set<Occurrence> seqOccurenceInFormat = tokenOccurenceMap.get('N');
-		//List<String> outputSequencesList = Collections.nCopies(seqRequest.getCount(), intermediateFormat.toString());
-		List<String> outputSequencesList = new ArrayList<String>();
+    Set<Occurrence> seqOccurenceInFormat = tokenOccurenceMap.get('N');
+    // List<String> outputSequencesList = Collections.nCopies(seqRequest.getCount(),
+    // intermediateFormat.toString());
+    List<String> outputSequencesList = new ArrayList<String>();
 
-		if (!Objects.isNull(seqOccurenceInFormat)) {
-			String seqQuery = sqlQuery.replace(Constants.SEQUENCE_NAME, seqRequest.getSequenceName())
-					.replace(Constants.SEQUENCE_COUNT, String.valueOf(seqRequest.getCount()));
-			Map<String, Object> sqlResponse = dao.next(seqQuery);
-			long seqRangeStart = (long) sqlResponse.get(Constants.SEQUENCE_START);
-			long seqRangeEnd = (long) sqlResponse.get(Constants.SEQUENCE_END);
+    if (!Objects.isNull(seqOccurenceInFormat)) {
+      String seqQuery =
+          sqlQuery
+              .replace(Constants.SEQUENCE_NAME, seqRequest.getSequenceName())
+              .replace(Constants.SEQUENCE_COUNT, String.valueOf(seqRequest.getCount()));
+      Map<String, Object> sqlResponse = dao.next(seqQuery);
+      long seqRangeStart = (long) sqlResponse.get(Constants.SEQUENCE_START);
+      long seqRangeEnd = (long) sqlResponse.get(Constants.SEQUENCE_END);
 
-			if (seqRequest.getSequenceFormat().length() < String.valueOf(seqRangeEnd).length())
-				throw new ConfigurationException("Invalid configuration of the token 'N'. Should be minimum of length "
-						+ String.valueOf(seqRangeEnd).length());
+      if (seqRequest.getSequenceFormat().length() < String.valueOf(seqRangeEnd).length())
+        throw new ConfigurationException(
+            "Invalid configuration of the token 'N'. Should be minimum of length "
+                + String.valueOf(seqRangeEnd).length());
 
-			seqOccurenceInFormat.stream().forEach(eachOccu -> {
-				for (long i = seqRangeStart; i <= seqRangeEnd; i++) {
-					StringBuilder outputSequences = new StringBuilder(intermediateFormat);
-					eachOccu.setStrToReplace(String.valueOf(i));
-					replaceFormat(eachOccu, outputSequences);
-					outputSequencesList.add(outputSequences.toString());
-				}
-			});
-		} 
-		return outputSequencesList;
-	}
+      seqOccurenceInFormat.stream()
+          .forEach(
+              eachOccu -> {
+                for (long i = seqRangeStart; i <= seqRangeEnd; i++) {
+                  StringBuilder outputSequences = new StringBuilder(intermediateFormat);
+                  eachOccu.setStrToReplace(String.valueOf(i));
+                  replaceFormat(eachOccu, outputSequences);
+                  outputSequencesList.add(outputSequences.toString());
+                }
+              });
+    }
+    return outputSequencesList;
+  }
 
-	private void replaceFormat(Occurrence eachOccu, StringBuilder intermediateFormat) {
+  private void replaceFormat(Occurrence eachOccu, StringBuilder intermediateFormat) {
 
-		int length = (eachOccu.getEnd() - eachOccu.getStart() + 1);
-		String strToReplace = leftPad(eachOccu.getStrToReplace(), length, "0");
-		if (!Objects.isNull(strToReplace))
-			intermediateFormat.replace(eachOccu.getStart(), eachOccu.getEnd() + 1, strToReplace);
-	}
+    int length = (eachOccu.getEnd() - eachOccu.getStart() + 1);
+    String strToReplace = leftPad(eachOccu.getStrToReplace(), length, "0");
+    if (!Objects.isNull(strToReplace))
+      intermediateFormat.replace(eachOccu.getStart(), eachOccu.getEnd() + 1, strToReplace);
+  }
 }
