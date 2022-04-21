@@ -43,14 +43,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 @DirtiesContext
 class SequenceDaoTest {
-  /*@Autowired private SequenceDao dao;
-
-  @Value(value = "${scoperetail.ginti.sql}")
-  private String sql;
-
-  @Test
-  void next() {
-    // long sequence = dao.next(sql);
-    // assertEquals(10, sequence);
-  }*/
+	/*
+	 * @Autowired private SequenceDao dao;
+	 * 
+	 * @Value(value = "${scoperetail.ginti.sql}") private String sql;
+	 * 
+	 * @Test void next() { // long sequence = dao.next(sql); // assertEquals(10,
+	 * sequence); }
+	 */
 }

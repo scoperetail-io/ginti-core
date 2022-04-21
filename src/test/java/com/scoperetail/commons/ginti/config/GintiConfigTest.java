@@ -41,15 +41,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 @DirtiesContext
 class GintiConfigTest {
-  /*
-    @Autowired private GintiConfig tenantGintiConfig;
-
-  @Test
-  void tenants() {
-    final List<Tenan> tenants = tenantGintiConfig.getTenant();
-    assertEquals("05", tenants.get(0).getId());
-    assertEquals("05", tenants.get(0).getPrefix());
-    assertEquals("DDTTNN", tenants.get(0).getFormat());
-    assertEquals("ORDER", tenants.get(0).getSequence());
-  }*/
+	/*
+	 * @Autowired private GintiConfig tenantGintiConfig;
+	 * 
+	 * @Test void tenants() { final List<Tenan> tenants =
+	 * tenantGintiConfig.getTenant(); assertEquals("05", tenants.get(0).getId());
+	 * assertEquals("05", tenants.get(0).getPrefix()); assertEquals("DDTTNN",
+	 * tenants.get(0).getFormat()); assertEquals("ORDER",
+	 * tenants.get(0).getSequence()); }
+	 */
 }

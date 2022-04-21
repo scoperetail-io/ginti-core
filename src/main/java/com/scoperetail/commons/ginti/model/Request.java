@@ -39,8 +39,8 @@ import lombok.Setter;
 @Builder
 public class Request {
 
-  private String sequenceName;
-  private String sequenceFormat;
-  private String alias;
-  private Integer count;
+	private String sequenceName;
+	private String sequenceFormat;
+	private String alias;
+	private Integer count;
 }

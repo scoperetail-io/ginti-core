@@ -27,7 +27,8 @@ package com.scoperetail.commons.ginti.service;
  */
 
 public interface EpochDay {
-  long EPOCH_CONVERTER = (1000 * 60 * 60 * 24);
-  /** @return Current day number since Epoch */
-  int current();
+	long EPOCH_CONVERTER = (1000 * 60 * 60 * 24);
+
+	/** @return Current day number since Epoch */
+	int current();
 }

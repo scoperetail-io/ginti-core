@@ -29,10 +29,11 @@ import java.util.Map;
  */
 
 public interface SequenceDao {
-  /**
-   * Return the next sequence number from the DB for the given sql query to fetch range of sequence
-   *
-   * @return a Map<String,Object>
-   */
-  Map<String, Object> next(final String sql);
+	/**
+	 * Return the next sequence number from the DB for the given sql query to fetch
+	 * range of sequence
+	 *
+	 * @return a Map<String,Object>
+	 */
+	Map<String, Object> next(final String sql);
 }

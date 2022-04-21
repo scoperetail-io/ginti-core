@@ -41,73 +41,70 @@ import com.scoperetail.commons.ginti.service.EpochDay;
 @Component
 public class ValidateTokens {
 
-  @Autowired private EpochDay epochDay;
+	@Autowired
+	private EpochDay epochDay;
 
-  public Map<Character, Set<Occurrence>> validate(Request seqRequest) {
+	public Map<Character, Set<Occurrence>> validate(Request seqRequest) {
 
-    checkForValidToken(seqRequest.getSequenceFormat());
-    return initializeTokenMap(seqRequest);
-  }
+		checkForValidToken(seqRequest.getSequenceFormat());
+		return initializeTokenMap(seqRequest);
+	}
 
-  public void checkForValidToken(String seqFormat) {
+	public void checkForValidToken(String seqFormat) {
 
-    if (!Pattern.matches(Constants.VALID_CHARACTERS_IN_FORMAT, seqFormat))
-      throw new ConfigurationException("Sequence Format " + seqFormat + " not valid");
-  }
+		if (!Pattern.matches(Constants.VALID_CHARACTERS_IN_FORMAT, seqFormat))
+			throw new ConfigurationException("Sequence Format " + seqFormat + " not valid");
+	}
 
-  private Map<Character, Set<Occurrence>> initializeTokenMap(Request seqReq) {
+	private Map<Character, Set<Occurrence>> initializeTokenMap(Request seqReq) {
 
-    String seqFormat = seqReq.getSequenceFormat();
-    String alias = seqReq.getAlias();
-    Map<Character, Set<Occurrence>> tokenOccurenceMap = new HashMap<Character, Set<Occurrence>>();
-    int start = 0, end = 0;
-    for (int i = 0; i < seqFormat.length(); i++) {
-      char currentToken = seqFormat.charAt(i);
-      if (!(i < (seqFormat.length() - 1) && currentToken == seqFormat.charAt(i + 1))) {
-        end = i;
-        Set<Occurrence> occurenceSet = new HashSet<Occurrence>();
-        occurenceSet.add(createOccurenceObject(currentToken, start, end, alias));
+		String seqFormat = seqReq.getSequenceFormat();
+		String alias = seqReq.getAlias();
+		Map<Character, Set<Occurrence>> tokenOccurenceMap = new HashMap<Character, Set<Occurrence>>();
+		int start = 0, end = 0;
+		for (int i = 0; i < seqFormat.length(); i++) {
+			char currentToken = seqFormat.charAt(i);
+			if (!(i < (seqFormat.length() - 1) && currentToken == seqFormat.charAt(i + 1))) {
+				end = i;
+				Set<Occurrence> occurenceSet = new HashSet<Occurrence>();
+				occurenceSet.add(createOccurenceObject(currentToken, start, end, alias));
 
-        if (tokenOccurenceMap.get(currentToken) == null)
-          tokenOccurenceMap.put(currentToken, occurenceSet);
-        else {
-          Set<Occurrence> setObject = tokenOccurenceMap.get(currentToken);
-          setObject.add(createOccurenceObject(currentToken, start, end, alias));
-        }
-        start = i + 1;
-      }
-    }
-    return tokenOccurenceMap;
-  }
+				if (tokenOccurenceMap.get(currentToken) == null)
+					tokenOccurenceMap.put(currentToken, occurenceSet);
+				else {
+					Set<Occurrence> setObject = tokenOccurenceMap.get(currentToken);
+					setObject.add(createOccurenceObject(currentToken, start, end, alias));
+				}
+				start = i + 1;
+			}
+		}
+		return tokenOccurenceMap;
+	}
 
-  private Occurrence createOccurenceObject(char currentToken, int start, int end, String alias) {
-    Occurrence occ = new Occurrence(start, end);
+	private Occurrence createOccurenceObject(char currentToken, int start, int end, String alias) {
+		Occurrence occ = new Occurrence(start, end);
 
-    switch (currentToken) {
-      case 'D':
-        String epochDays = String.valueOf(epochDay.current());
-        validateTokenLength(start, end, epochDays.length(), currentToken);
-        occ.setStrToReplace(epochDays);
-        break;
+		switch (currentToken) {
+		case 'D':
+			String epochDays = String.valueOf(epochDay.current());
+			validateTokenLength(start, end, epochDays.length(), currentToken);
+			occ.setStrToReplace(epochDays);
+			break;
 
-      case 'T':
-        validateTokenLength(start, end, alias.length(), currentToken);
-        occ.setStrToReplace(alias);
-        break;
-      default:
-        break;
-    }
-    return occ;
-  }
+		case 'T':
+			validateTokenLength(start, end, alias.length(), currentToken);
+			occ.setStrToReplace(alias);
+			break;
+		default:
+			break;
+		}
+		return occ;
+	}
 
-  private void validateTokenLength(
-      int start, int end, int lengthToValidate, Character currentToken) {
+	private void validateTokenLength(int start, int end, int lengthToValidate, Character currentToken) {
 
-    if ((end - start + 1) < lengthToValidate)
-      throw new ConfigurationException(
-          "Invalid configuration of the token '"
-              + currentToken
-              + "'. Should be minimum of length "
-              + lengthToValidate);
-  }
+		if ((end - start + 1) < lengthToValidate)
+			throw new ConfigurationException("Invalid configuration of the token '" + currentToken
+					+ "'. Should be minimum of length " + lengthToValidate);
+	}
 }

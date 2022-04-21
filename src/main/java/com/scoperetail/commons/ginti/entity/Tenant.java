@@ -43,17 +43,17 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Tenant {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "tenant_id", unique = true, nullable = false)
-  private Integer tenantId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "tenant_id", unique = true, nullable = false)
+	private Integer tenantId;
 
-  @Column(name = "tenant_name")
-  private String tenantName;
+	@Column(name = "tenant_name")
+	private String tenantName;
 
-  @Column(name = "default_sequence")
-  private String defaultSequence;
+	@Column(name = "default_sequence")
+	private String defaultSequence;
 
-  @Column(name = "default_format")
-  private String defaultFormat;
+	@Column(name = "default_format")
+	private String defaultFormat;
 }

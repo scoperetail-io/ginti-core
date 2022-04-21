@@ -43,13 +43,12 @@ import static com.scoperetail.commons.ginti.service.EpochDay.EPOCH_CONVERTER;
 @SpringBootTest
 @DirtiesContext
 class SequenceGeneratorTest {
- /* @Autowired private GintiGenerator<Long> generator;
-  private static final int EPOCH_DAY = (int) (System.currentTimeMillis() / EPOCH_CONVERTER);
-
-  @Test
-  void next() {
-    // final Long next = generator.next("05");
-    // assertEquals(Long.valueOf(EPOCH_DAY + "0500000000010"), next);
-    // assertEquals(18, StringUtils.length(next + ""));
-  }*/
+	/*
+	 * @Autowired private GintiGenerator<Long> generator; private static final int
+	 * EPOCH_DAY = (int) (System.currentTimeMillis() / EPOCH_CONVERTER);
+	 * 
+	 * @Test void next() { // final Long next = generator.next("05"); //
+	 * assertEquals(Long.valueOf(EPOCH_DAY + "0500000000010"), next); //
+	 * assertEquals(18, StringUtils.length(next + "")); }
+	 */
 }

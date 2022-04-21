@@ -33,5 +33,5 @@ import com.scoperetail.commons.ginti.model.Request;
 
 public interface SequenceFormatter<ReturnType> {
 
-  ReturnType format(Request seqRequest, Map<Character, Set<Occurrence>> tokenOccurenceMap);
+	ReturnType format(Request seqRequest, Map<Character, Set<Occurrence>> tokenOccurenceMap);
 }
