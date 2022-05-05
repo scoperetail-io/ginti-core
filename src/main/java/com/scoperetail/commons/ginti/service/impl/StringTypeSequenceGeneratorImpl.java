@@ -43,20 +43,22 @@ import com.scoperetail.commons.ginti.exception.ConfigurationException;
 @Slf4j
 public class StringTypeSequenceGeneratorImpl implements GintiGenerator<String> {
 
-	private ValidateTokens validate;
-	private final SequenceFormatter<List<String>> formatter;
+  private ValidateTokens validate;
+  private final SequenceFormatter<List<String>> formatter;
 
-	public StringTypeSequenceGeneratorImpl(final EpochDay epochDay, final SequenceFormatter<List<String>> formatter,
-			final ValidateTokens validate) {
-		this.formatter = formatter;
-		this.validate = validate;
-	}
+  public StringTypeSequenceGeneratorImpl(
+      final EpochDay epochDay,
+      final SequenceFormatter<List<String>> formatter,
+      final ValidateTokens validate) {
+    this.formatter = formatter;
+    this.validate = validate;
+  }
 
-	@Override
-	public List<String> next(Request seqRequest) throws ConfigurationException {
+  @Override
+  public List<String> next(Request seqRequest) throws ConfigurationException {
 
-		log.debug("seqRequest: {}", seqRequest);
-		Map<Character, Set<Occurrence>> tokenOccurenceMap = validate.validate(seqRequest);
-		return formatter.format(seqRequest, tokenOccurenceMap);
-	}
+    log.debug("seqRequest: {}", seqRequest);
+    Map<Character, Set<Occurrence>> tokenOccurenceMap = validate.validate(seqRequest);
+    return formatter.format(seqRequest, tokenOccurenceMap);
+  }
 }

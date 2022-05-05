@@ -36,15 +36,15 @@ import org.springframework.stereotype.Repository;
 @Slf4j
 public class SequenceDaoImpl implements SequenceDao {
 
-	private final JdbcTemplate jdbcTemplate;
+  private final JdbcTemplate jdbcTemplate;
 
-	public SequenceDaoImpl(final JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
+  public SequenceDaoImpl(final JdbcTemplate jdbcTemplate) {
+    this.jdbcTemplate = jdbcTemplate;
+  }
 
-	@Override
-	public Map<String, Object> next(final String sql) {
-		log.debug("sql:{}", sql);
-		return jdbcTemplate.queryForMap(sql);
-	}
+  @Override
+  public Map<String, Object> next(final String sql) {
+    log.debug("sql:{}", sql);
+    return jdbcTemplate.queryForMap(sql);
+  }
 }

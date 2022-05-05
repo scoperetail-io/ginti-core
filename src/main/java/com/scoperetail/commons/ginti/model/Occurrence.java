@@ -37,22 +37,20 @@ import lombok.RequiredArgsConstructor;
 @Data
 @Builder
 public class Occurrence {
-	private final int start;
-	private final int end;
-	private String strToReplace;
+  private final int start;
+  private final int end;
+  private String strToReplace;
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Occurrence that = (Occurrence) o;
-		return start == that.start && end == that.end;
-	}
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Occurrence that = (Occurrence) o;
+    return start == that.start && end == that.end;
+  }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(start, end);
-	}
+  @Override
+  public int hashCode() {
+    return Objects.hash(start, end);
+  }
 }

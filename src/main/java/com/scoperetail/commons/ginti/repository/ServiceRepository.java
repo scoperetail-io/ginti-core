@@ -36,9 +36,10 @@ import java.util.Optional;
 @Repository
 public interface ServiceRepository extends JpaRepository<Service, Integer> {
 
-	public static final String GET_SERVICES_WITH_TENANT = "SELECT ser from Service ser JOIN FETCH ser.tenant ten where ser.serviceName = :serviceName and ten.tenantName=:tenantName";
+  public static final String GET_SERVICES_WITH_TENANT =
+      "SELECT ser from Service ser JOIN FETCH ser.tenant ten where ser.serviceName = :serviceName and ten.tenantName=:tenantName";
 
-	@Query(value = GET_SERVICES_WITH_TENANT)
-	Optional<Service> findByServiceNameAndTenantName(@Param("serviceName") String serviceName,
-			@Param("tenantName") String tenantName);
+  @Query(value = GET_SERVICES_WITH_TENANT)
+  Optional<Service> findByServiceNameAndTenantName(
+      @Param("serviceName") String serviceName, @Param("tenantName") String tenantName);
 }

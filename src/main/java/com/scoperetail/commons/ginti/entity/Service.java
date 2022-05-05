@@ -47,24 +47,24 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Service {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "service_id", unique = true, nullable = false)
-	private Integer serviceId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "service_id", unique = true, nullable = false)
+  private Integer serviceId;
 
-	@Column(name = "service_name")
-	private String serviceName;
+  @Column(name = "service_name")
+  private String serviceName;
 
-	@Column(name = "alias")
-	private String alias;
+  @Column(name = "alias")
+  private String alias;
 
-	@Column(name = "format")
-	private String format;
+  @Column(name = "format")
+  private String format;
 
-	@Column(name = "sequence_name")
-	private String sequenceName;
+  @Column(name = "sequence_name")
+  private String sequenceName;
 
-	@ManyToOne
-	@JoinColumn(name = "tenant_id")
-	private Tenant tenant;
+  @ManyToOne
+  @JoinColumn(name = "tenant_id")
+  private Tenant tenant;
 }

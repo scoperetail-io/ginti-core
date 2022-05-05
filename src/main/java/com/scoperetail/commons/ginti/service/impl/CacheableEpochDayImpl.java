@@ -33,22 +33,26 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.TimeUnit;
 
 /**
- * A read through cache implementation to get calculate the current epoch day.
- * It expires after 60 minutes and loads on a cache miss.
+ * A read through cache implementation to get calculate the current epoch day. It expires after 60
+ * minutes and loads on a cache miss.
  */
 @Service
 public class CacheableEpochDayImpl implements EpochDay {
 
-	private Cache<String, Integer> epochDayCache = new Cache2kBuilder<String, Integer>() {
-	}.name("epochDayCache-" + hashCode()).eternal(false).entryCapacity(1)
-			.expireAfterWrite(60l * 60 * 1000, TimeUnit.MILLISECONDS).loader(key -> from()).build();
+  private Cache<String, Integer> epochDayCache =
+      new Cache2kBuilder<String, Integer>() {}.name("epochDayCache-" + hashCode())
+          .eternal(false)
+          .entryCapacity(1)
+          .expireAfterWrite(60l * 60 * 1000, TimeUnit.MILLISECONDS)
+          .loader(key -> from())
+          .build();
 
-	private int from() {
-		return (int) (System.currentTimeMillis() / EPOCH_CONVERTER);
-	}
+  private int from() {
+    return (int) (System.currentTimeMillis() / EPOCH_CONVERTER);
+  }
 
-	@Override
-	public int current() {
-		return epochDayCache.get("CURRENT_EPOCH_DAY");
-	}
+  @Override
+  public int current() {
+    return epochDayCache.get("CURRENT_EPOCH_DAY");
+  }
 }
