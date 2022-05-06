@@ -40,7 +40,7 @@ public interface GintiGenerator<ReturnType> {
    *
    * @param seqRequest - Details of sequence that needs to be generated
    * @return List of sequence number formatted as per the configuration
-   * @throws Exception
+   * @throws RuntimeException
    */
   List<ReturnType> next(Request seqRequest) throws RuntimeException;
 }
