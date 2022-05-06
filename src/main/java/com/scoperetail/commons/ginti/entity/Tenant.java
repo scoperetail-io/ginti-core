@@ -1,6 +1,4 @@
-package com.scoperetail.commons.ginti.persistence;
-
-import java.util.Map;
+package com.scoperetail.commons.ginti.entity;
 
 /*-
  * *****
@@ -28,11 +26,34 @@ import java.util.Map;
  * =====
  */
 
-public interface SequenceDao {
-  /**
-   * Return the next sequence number from the DB for the given sql query to fetch range of sequence
-   *
-   * @return a Map<String,Object>
-   */
-  Map<String, Object> next(final String sql);
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Tenant {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "tenant_id", unique = true, nullable = false)
+  private Integer tenantId;
+
+  @Column(name = "tenant_name")
+  private String tenantName;
+
+  @Column(name = "default_sequence")
+  private String defaultSequence;
+
+  @Column(name = "default_format")
+  private String defaultFormat;
 }

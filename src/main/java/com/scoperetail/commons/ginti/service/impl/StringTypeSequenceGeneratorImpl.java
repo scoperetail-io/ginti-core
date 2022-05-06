@@ -1,4 +1,4 @@
-package com.scoperetail.commons.ginti.format;
+package com.scoperetail.commons.ginti.service.impl;
 
 /*-
  * *****
@@ -26,12 +26,39 @@ package com.scoperetail.commons.ginti.format;
  * =====
  */
 
-import java.util.Map;
-import java.util.Set;
+import com.scoperetail.commons.ginti.format.SequenceFormatter;
 import com.scoperetail.commons.ginti.model.Occurrence;
 import com.scoperetail.commons.ginti.model.Request;
+import com.scoperetail.commons.ginti.service.EpochDay;
+import com.scoperetail.commons.ginti.service.GintiGenerator;
+import com.scoperetail.commons.ginti.util.ValidateTokens;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import com.scoperetail.commons.ginti.exception.ConfigurationException;
 
-public interface SequenceFormatter<ReturnType> {
+@Service
+@Slf4j
+public class StringTypeSequenceGeneratorImpl implements GintiGenerator<String> {
 
-  ReturnType format(Request seqRequest, Map<Character, Set<Occurrence>> tokenOccurenceMap);
+  private ValidateTokens validate;
+  private final SequenceFormatter<List<String>> formatter;
+
+  public StringTypeSequenceGeneratorImpl(
+      final EpochDay epochDay,
+      final SequenceFormatter<List<String>> formatter,
+      final ValidateTokens validate) {
+    this.formatter = formatter;
+    this.validate = validate;
+  }
+
+  @Override
+  public List<String> next(Request seqRequest) throws ConfigurationException {
+
+    log.debug("seqRequest: {}", seqRequest);
+    Map<Character, Set<Occurrence>> tokenOccurenceMap = validate.validate(seqRequest);
+    return formatter.format(seqRequest, tokenOccurenceMap);
+  }
 }

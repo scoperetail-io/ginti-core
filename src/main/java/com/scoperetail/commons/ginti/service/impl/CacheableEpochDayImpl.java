@@ -30,11 +30,10 @@ import com.scoperetail.commons.ginti.service.EpochDay;
 import org.cache2k.Cache;
 import org.cache2k.Cache2kBuilder;
 import org.springframework.stereotype.Service;
-
 import java.util.concurrent.TimeUnit;
 
 /**
- * A read through cache implementation to get calculaae the current epoch day. It expires after 60
+ * A read through cache implementation to get calculate the current epoch day. It expires after 60
  * minutes and loads on a cache miss.
  */
 @Service

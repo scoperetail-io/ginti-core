@@ -12,10 +12,10 @@ package com.scoperetail.commons.ginti.service;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,6 +27,7 @@ package com.scoperetail.commons.ginti.service;
  */
 
 import java.util.List;
+import com.scoperetail.commons.ginti.model.Request;
 
 /**
  * Main interface to be used by all consumers interested in generating sequences
@@ -35,41 +36,11 @@ import java.util.List;
  */
 public interface GintiGenerator<ReturnType> {
   /**
-   * Generate one sequence number for the given tenantId
-   *
-   * @param tenantId - key to identify the sequenceId and format for this sequence
-   * @return Single sequence number formatted as per the configuration
-   */
-  ReturnType next(final String tenantId);
-  /**
-   * Generate one sequence number for the given tenantId and sequenceId
-   *
-   * @param tenantId - key to identify the sequenceId and format for this sequence
-   * @param sequenceId - Specify the sequence object to be used in case the same tenant need more
-   *     than one sequences.
-   *     <p>For example: Tenant walmart need a sequence for Orders and Payment transaction. In that
-   *     case we can configure two different database sequences for each type.
-   * @return Single sequence number formatted as per the configuration
-   */
-  ReturnType next(final String tenantId, final String sequenceId);
-  /**
    * Generate a list of sequence number for the given tenantId
    *
-   * @param tenantId - key to identify the sequenceId and format for this sequence
-   * @param count - Total number of sequences to be generated.
+   * @param seqRequest - Details of sequence that needs to be generated
    * @return List of sequence number formatted as per the configuration
+   * @throws Exception
    */
-  List<ReturnType> next(final String tenantId, final int count);
-  /**
-   * Generate one sequence number for the given tenantId and sequenceId
-   *
-   * @param tenantId - key to identify the sequenceId and format for this sequence
-   * @param sequenceId - Specify the sequence object to be used in case the same tenant need more
-   *     than one sequences.
-   *     <p>For example: Tenant walmart need a sequence for Orders and Payment transaction. In that
-   *     case we can configure two different database sequences for each type.
-   * @param count - Total number of sequences to be generated.
-   * @return List of sequence number formatted as per the configuration
-   */
-  List<ReturnType> next(final String tenantId, final String sequenceId, final int count);
+  List<ReturnType> next(Request seqRequest) throws RuntimeException;
 }

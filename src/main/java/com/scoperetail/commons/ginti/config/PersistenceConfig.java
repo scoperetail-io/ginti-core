@@ -1,6 +1,4 @@
-package com.scoperetail.commons.ginti.persistence;
-
-import java.util.Map;
+package com.scoperetail.commons.ginti.config;
 
 /*-
  * *****
@@ -28,11 +26,11 @@ import java.util.Map;
  * =====
  */
 
-public interface SequenceDao {
-  /**
-   * Return the next sequence number from the DB for the given sql query to fetch range of sequence
-   *
-   * @return a Map<String,Object>
-   */
-  Map<String, Object> next(final String sql);
-}
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+@Configuration
+@EntityScan({"com.scoperetail.commons.ginti"})
+@EnableJpaRepositories(basePackages = {"com.scoperetail.commons.ginti"})
+public class PersistenceConfig {}

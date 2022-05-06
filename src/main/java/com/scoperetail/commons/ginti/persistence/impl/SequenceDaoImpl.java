@@ -28,17 +28,13 @@ package com.scoperetail.commons.ginti.persistence.impl;
 
 import com.scoperetail.commons.ginti.persistence.SequenceDao;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import java.util.Map;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import java.util.Map;
 
 @Repository
 @Slf4j
 public class SequenceDaoImpl implements SequenceDao {
-
-
 
   private final JdbcTemplate jdbcTemplate;
 
@@ -47,8 +43,8 @@ public class SequenceDaoImpl implements SequenceDao {
   }
 
   @Override
-  public Long next(final String sql) {
-    log.trace("sql:{}", sql);
-    return jdbcTemplate.queryForObject(sql, Long.class);
+  public Map<String, Object> next(final String sql) {
+    log.debug("sql:{}", sql);
+    return jdbcTemplate.queryForMap(sql);
   }
 }

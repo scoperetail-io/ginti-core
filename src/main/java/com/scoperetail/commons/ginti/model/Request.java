@@ -1,4 +1,4 @@
-package com.scoperetail.commons.ginti.config;
+package com.scoperetail.commons.ginti.model;
 
 /*-
  * *****
@@ -26,16 +26,21 @@ package com.scoperetail.commons.ginti.config;
  * =====
  */
 
-import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"id"})
-public class Tenant {
-  private String id;
-  private String prefix;
-  private String format;
-  private String sequence;
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Request {
+
+  private String sequenceName;
+  private String sequenceFormat;
+  private String alias;
+  private Integer count;
 }

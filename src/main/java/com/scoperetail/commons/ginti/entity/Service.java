@@ -1,4 +1,4 @@
-package com.scoperetail.commons.ginti.config;
+package com.scoperetail.commons.ginti.entity;
 
 /*-
  * *****
@@ -26,37 +26,45 @@ package com.scoperetail.commons.ginti.config;
  * =====
  */
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+@Entity
+@Table(name = "services")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Service {
 
-@Component
-@ConfigurationProperties(prefix = "scoperetail.ginti")
-@Getter
-@Setter
-public class GintiConfig {
-  private List<Tenant> tenant;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "service_id", unique = true, nullable = false)
+  private Integer serviceId;
 
-  @Getter(AccessLevel.NONE)
-  @Setter(AccessLevel.NONE)
-  private Map<String, Tenant> map;
+  @Column(name = "service_name")
+  private String serviceName;
 
-  @PostConstruct
-  private void init() {
-    map =
-        tenant.stream()
-            .collect(Collectors.toMap(Tenant::getId, s -> s, (e1, e2) -> e1, HashMap::new));
-  }
+  @Column(name = "alias")
+  private String alias;
 
-  public Tenant getTenant(String id) {
-    return map.get(id);
-  }
+  @Column(name = "format")
+  private String format;
+
+  @Column(name = "sequence_name")
+  private String sequenceName;
+
+  @ManyToOne
+  @JoinColumn(name = "tenant_id")
+  private Tenant tenant;
 }

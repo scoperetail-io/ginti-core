@@ -1,4 +1,4 @@
-package com.scoperetail.commons.ginti.persistence;
+package com.scoperetail.commons.ginti.exception;
 
 /*-
  * *****
@@ -26,35 +26,11 @@ package com.scoperetail.commons.ginti.persistence;
  * =====
  */
 
-import com.scoperetail.commons.ginti.GintiCoreApplication;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+public class ConfigurationException extends RuntimeException {
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+  private static final long serialVersionUID = 1L;
 
-@ActiveProfiles("sequencetest")
-@ComponentScan(basePackageClasses = GintiCoreApplication.class)
-@EnableAutoConfiguration
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-@DirtiesContext
-class SequenceDaoTest {
-  @Autowired private SequenceDao dao;
-
-  @Value(value = "${scoperetail.ginti.sql}")
-  private String sql;
-
-  @Test
-  void next() {
-    long sequence = dao.next(sql);
-    assertEquals(10, sequence);
+  public ConfigurationException(final String exception) {
+    super(exception);
   }
 }

@@ -1,4 +1,4 @@
-package com.scoperetail.commons.ginti;
+package com.scoperetail.commons.ginti.util;
 
 /*-
  * *****
@@ -26,12 +26,11 @@ package com.scoperetail.commons.ginti;
  * =====
  */
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+public interface Constants {
 
-@SpringBootApplication
-public class GintiCoreApplication {
-  public static void main(String[] args) {
-    SpringApplication.run(GintiCoreApplication.class, args);
-  }
+  public static final String SEQUENCE_NAME = ":sequ_name";
+  public static final String SEQUENCE_COUNT = ":count";
+  public static final String SEQUENCE_START = "FirstVal";
+  public static final String SEQUENCE_END = "LastVal";
+  public static final String VALID_CHARACTERS_IN_FORMAT = "[DTN-]+";
 }

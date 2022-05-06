@@ -1,6 +1,4 @@
-package com.scoperetail.commons.ginti.persistence;
-
-import java.util.Map;
+package com.scoperetail.commons.ginti.model;
 
 /*-
  * *****
@@ -28,11 +26,31 @@ import java.util.Map;
  * =====
  */
 
-public interface SequenceDao {
-  /**
-   * Return the next sequence number from the DB for the given sql query to fetch range of sequence
-   *
-   * @return a Map<String,Object>
-   */
-  Map<String, Object> next(final String sql);
+import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Data
+@Builder
+public class Occurrence {
+  private final int start;
+  private final int end;
+  private String strToReplace;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Occurrence that = (Occurrence) o;
+    return start == that.start && end == that.end;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(start, end);
+  }
 }

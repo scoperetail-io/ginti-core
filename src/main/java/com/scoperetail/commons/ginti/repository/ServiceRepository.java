@@ -1,6 +1,4 @@
-package com.scoperetail.commons.ginti.persistence;
-
-import java.util.Map;
+package com.scoperetail.commons.ginti.repository;
 
 /*-
  * *****
@@ -28,11 +26,20 @@ import java.util.Map;
  * =====
  */
 
-public interface SequenceDao {
-  /**
-   * Return the next sequence number from the DB for the given sql query to fetch range of sequence
-   *
-   * @return a Map<String,Object>
-   */
-  Map<String, Object> next(final String sql);
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import com.scoperetail.commons.ginti.entity.Service;
+import java.util.Optional;
+
+@Repository
+public interface ServiceRepository extends JpaRepository<Service, Integer> {
+
+  public static final String GET_SERVICES_WITH_TENANT =
+      "SELECT ser from Service ser JOIN FETCH ser.tenant ten where ser.serviceName = :serviceName and ten.tenantName=:tenantName";
+
+  @Query(value = GET_SERVICES_WITH_TENANT)
+  Optional<Service> findByServiceNameAndTenantName(
+      @Param("serviceName") String serviceName, @Param("tenantName") String tenantName);
 }
